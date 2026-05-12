@@ -151,46 +151,4 @@ app.post('/api/sync-prices', async (req, res) => {
 	}
 });
 
-app.post('/api/seed-mock-data', async (req, res) => {
-    try {
-        const db = getDb(); // 確保你有引入 getDb
-        const basePrice = 48.5;
-        const productName = '稉種白米(模擬數據)';
-        
-        // 準備插入語法 (ON CONFLICT 防止重複日期報錯)
-        const insert = db.prepare(`
-            INSERT INTO prices (sale_date, product_name, price)
-            VALUES (?, ?, ?)
-            ON CONFLICT(sale_date, product_name) DO UPDATE SET price = excluded.price
-        `);
-
-        // 使用 Transaction 加速寫入
-        const insertMany = db.transaction(() => {
-            for (let i = 0; i < 50; i++) {
-                // 產生日期：從今天 (2026-05-11) 往回推
-                const date = new Date();
-                date.setDate(date.getDate() - i);
-                const dateISO = date.toISOString().split('T')[0];
-
-                // 隨機生成 45.00 ~ 52.00 之間的價格
-                const randomPrice = (basePrice + (Math.random() * 6 - 3)).toFixed(2);
-
-                insert.run(dateISO, productName, parseFloat(randomPrice));
-            }
-        });
-
-        insertMany();
-
-        console.log('✅ 50 筆模擬數據已成功插入');
-        res.json({
-            success: true,
-            message: 'Successfully seeded 50 mock records',
-            sample: `2026-05-11: ${basePrice}`
-        });
-    } catch (err) {
-        console.error('❌ 模擬數據寫入失敗:', err.message);
-        res.status(500).json({ error: err.message });
-    }
-});
-
 export default app;
