@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>米流控制 | 趨勢圖表</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="page">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Rice Flow Control</p>
+          <h1>米流控制</h1>
+          <p class="subtitle">趨勢儀表板 · 資料庫近一個月價格</p>
+        </div>
+        <a class="ghost-link" href="/">回到首頁</a>
+      </header>
+
+      <main class="grid single">
+        <section class="card">
+          <h2>價格走勢</h2>
+          <div class="chart-shell">
+            <canvas id="price-chart" height="120"></canvas>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="/javascripts/charts.js"></script>
+  </body>
+</html>
